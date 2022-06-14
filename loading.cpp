@@ -1,10 +1,17 @@
+/*
+	Author	-> Dennis Turco 2022
+	Email 	-> dennisturco@gmail.com
+	WebSite	-> https://dennisturco.github.io/
+	GitHub	-> https://github.com/DennisTurco
+*/
+
 #include <iostream>
-#include <unistd.h> //libreria per sleep
-#include <random> //libreria per randomizer
+#include <unistd.h> //library for sleep
+#include <random> //library for randomizer
 #include <windows.h>
 #include <conio.h>
 
-using namespace std;
+#define MAX_DIM 23
 
 void color(int x){
     HANDLE hCon;
@@ -12,52 +19,51 @@ void color(int x){
     SetConsoleTextAttribute(hCon, x);
 }
 
-void StampaVettore(int contatore, char loading[]){
+void vector_print(int counter, char loading[]){
     color(7);
-    cout<<contatore<<"% ";
-    for (int i=0; i<23; i++){
+    std::cout<<counter<<"% ";
+    for (int i=0; i<MAX_DIM; i++){
         if(loading[i] == '#'){
             color(10);
-            cout<<loading[i];
+            std::cout<<loading[i];
         }
         else{
             color(7);
-            cout<<loading[i];
+            std::cout<<loading[i];
         }
     }
     color(7);
 }
 
 int main (){
-    int random; //il valore randomico va da 0 a 2
+    int random; //the value is between 0 and 2
     int random2;
-    int contatore = 0;
-    int controllo = 0;
-    int traccia = 0;
-    char loading[23] = {'[','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_',']'};
+    int counter = 0;
+    int trace = 0;
+    char loading[MAX_DIM] = {'[','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_',']'};
 
     do {
         random = rand() % 2;
         random2 = rand() % 6 + 1;
         
-        contatore = contatore + random2;
-        if (contatore > 100) contatore = 100;
+        counter = counter + random2;
+        if (counter > 100) counter = 100;
 
-        if(contatore/5 > traccia){
-            traccia = contatore/5;
-            loading[traccia] = '#';
+        if(counter/5 > trace){
+            trace = counter/5;
+            loading[trace] = '#';
         }
 
-        StampaVettore(contatore, loading);
+        vector_print(counter, loading);
         
         sleep(random);
         system ("cls");
     
-    } while (contatore < 100);
+    } while (counter < 100);
 
-    StampaVettore(contatore, loading);
+    vector_print(counter, loading);
     
-    cout<<"\nLoading Completed!"<<endl;
+    std::cout<<"\nLoading Completed!"<<std::endl;
     
     return 0;
 }
